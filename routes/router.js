@@ -1,81 +1,118 @@
 const r = require("koa-router")();
-const upload = require("../control/upload");
+const upload = require("../control/upload/index");
 const userPost = require("../control/user/index");
-const bugPost = require("../control/bug/index");
-const boardPost = require("../control/dataBoard/index");
-const projectPost = require("../control/project/index");
-const systemPost = require("../control/system/index");
+const productPost = require("../control/product/index");
+const businessPost = require("../control/business/index");
+const shopCartPost = require("../control/shopCart/index");
+const categoryPost = require("../control/category/index");
 
-// 首页登录验证接口
-r.post("/login", userPost.login);
+/**
+ * 商品
+ */
 
-// 退出登录接口
-r.post("/loginout", userPost.loginout);
+// 查询产品列表接口
+r.post("/products/all", productPost.queryProductList);
+// 添加商品
+r.post("/products/add", productPost.addProduct);
+// 编辑产品
+r.post("/products/edit", productPost.editProduct);
+// 查询商品详细
+r.post("/products/queryInfo", productPost.queryProductInfo);
+// 删除商品
+r.post("/products/delete", productPost.deleteProduct);
+
+/**
+ * 商家
+ */
+
+// 登录接口
+r.post("/business/login", businessPost.login);
 
 // 注册接口
-r.post("/register", userPost.register);
+r.post("/business/register", businessPost.register);
 
 // 修改密码
-r.post("/changePwd", userPost.changePwd);
+r.post("/business/changePwd", businessPost.changePwd);
 
-// 修改邮箱
-r.post("/changeEmail", userPost.changeEmail);
+// 添加商家接口
+r.post("/business/addUser", businessPost.addUser);
 
-// 添加用户接口
-r.post("/addUser", userPost.addUser);
+// 查询所有商家接口
+r.post("/business/select", businessPost.selectUser);
+
+// 查询商家详细信息
+r.post("/business/queryInfo", businessPost.queryInfo);
+
+// 修改商家信息
+r.post("/business/changeInfo", businessPost.changeInfo);
+
+// 删除商家
+r.post("/business/delete", businessPost.deleteUser);
+
+/**
+ * 用户
+ */
+
+// 登录接口
+r.post("/user/login", userPost.login);
+
+// 注册接口
+r.post("/user/register", userPost.register);
+
+// 修改密码
+r.post("/user/changePwd", userPost.changePwd);
 
 // 查询所有用户接口
-r.post("/selectUser", userPost.selectUser);
+r.post("/user/select", userPost.selectUser);
+
+// 查询用户详细信息
+r.post("/user/queryInfo", userPost.queryInfo);
 
 // 修改用户信息
-r.post("/changeInfo", userPost.changeInfo);
+r.post("/user/changeInfo", userPost.changeInfo);
 
 // 删除用户
-r.post("/deleteUser", userPost.deleteUser);
+r.post("/user/delete", userPost.deleteUser);
 
 // 修改本人头像
-r.post("/changeAvatar", userPost.changeOwnAvatar);
+r.post("/user/changeAvatar", userPost.changeOwnAvatar);
+
+/**
+ * 购物车
+ */
+
+// 查询购物车列表
+r.post("/shopCart/all", shopCartPost.queryShopCartList);
+
+// 加车接口
+r.post("/shopCart/add", shopCartPost.addCart);
+
+// 编辑购物车商品
+r.post("/shopCart/edit", shopCartPost.editCart);
+
+// 删除商品
+r.post("/shopCart/delete", shopCartPost.deleteCart);
+
+/**
+ * 类目
+ */
+
+// 查询类目列表接口
+r.post("/category/all", categoryPost.queryCategoryList);
+
+// 添加类目
+r.post("/category/add", categoryPost.addCategroy);
+
+// 编辑类目
+r.post("/category/edit", categoryPost.queryCategoryInfo);
+
+// 查询类目详细
+r.post("/category/queryInfo", categoryPost.editCategory);
+
+// 删除类目
+r.post("/category/delete", categoryPost.deleteCategory);
 
 // 上传图片接口
-r.post("/upload/imgs", upload.upload);
-
-// 创建bug
-r.post("/createBug", bugPost.createBug);
-
-// 查询bug
-r.post("/selectBug", bugPost.selectBug);
-
-// 删除bug
-r.post("/deleteBug", bugPost.deleteBug);
-
-// 修改bug
-r.post("/changeBug", bugPost.changeBug);
-
-// 更新bug信息
-r.post("/updateBug", bugPost.changeBug);
-
-// 创建项目
-r.post("/createProject", projectPost.createProject);
-
-// 删除项目
-r.post("/deleteProject", projectPost.deleteProject);
-
-// 修改项目
-r.post("/changeProject", projectPost.changeProject);
-
-// 查找项目
-r.post("/selectProject", projectPost.selectProject);
-
-// 数据看板-查询数据
-r.post("/searchData", boardPost.searchData);
-
-// 数据看板-查询折线图数据
-r.post("/searchLineData", boardPost.searchLineData);
-
-// 获取用户ip
-r.post("/postClientIp", systemPost.postClientIp);
-
-// 查询ip列表
-r.post("/searchIpList", systemPost.searchIpList);
+r.post("/upload/images", upload.upload);
 
 module.exports = r;

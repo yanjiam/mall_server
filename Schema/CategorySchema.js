@@ -7,11 +7,6 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
-    // 商品类目 id
-    id: {
-      type: Number,
-      required: true,
-    },
     // 商品类目下的子类目
     c_items: {
       type: Array,

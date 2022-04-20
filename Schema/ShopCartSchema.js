@@ -3,7 +3,7 @@ const { Schema } = require("./config");
 const ShopCartSchema = new Schema(
   {
     // 用户ID
-    userId: {
+    pin: {
       type: String,
       required: true,
     },

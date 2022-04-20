@@ -1,5 +1,5 @@
 const { Schema } = require("./config");
-
+const { CategoryModel } = require("../model/CategoryModel");
 const ProductSchema = new Schema(
   {
     // 商品标题
@@ -15,11 +15,11 @@ const ProductSchema = new Schema(
     // 商品类目
     category: {
       type: String,
-      required: false,
+      required: true,
     },
     // 商品子类目
-    c_items: {
-      type: Array,
+    c_item: {
+      type: String,
       required: false,
     },
     // 商品标签
@@ -49,6 +49,7 @@ const ProductSchema = new Schema(
     status: {
       type: Number,
       required: true,
+      default: 1,
     },
     // 商品图片
     images: {
@@ -68,15 +69,15 @@ const ProductSchema = new Schema(
       required: true,
       default: 0,
     },
-    // 唯一确定商品的 id 值
-    // _id: {
-    //   type: String,
-    //   required: true,
-    // },
-    // 更新时间
-    updateTime: {
+    // 所属商家
+    busPin: {
       type: String,
       required: true,
+    },
+    // 更新时间
+    updateTime: {
+      type: Number,
+      required: false,
     },
   },
   {

@@ -5,7 +5,7 @@ const BusinessModel = require("../../model/BusinessModel.js");
 
 // 查询产品列表
 const queryProductList = async (ctx) => {
-  const { pin, category, page, status, size, searchWord } = ctx.request.body;
+  const { pin, category, type, page, status, sort, size, searchWord } = ctx.request.body;
   let obj = {};
   if (pin) {
     obj.pin = pin;
@@ -16,12 +16,26 @@ const queryProductList = async (ctx) => {
   if (category) {
     obj.category = category;
   }
+  if (type && type !== 'all') {
+    obj.c_item = type;
+  }
   if (searchWord) {
     obj.title = { $regex: new RegExp(searchWord, "i") };
+  }
+  let sortType = {};
+  if (sort === 'price-down') {
+    sortType = { "price": -1 };
+  } else if (sort === 'sale') {
+    sortType = { "sale": 1 };
+  } else if (sort === 'price-up') {
+    sortType = { "price": 1 };
+  } else {
+    sortType = {};
   }
   try {
     // 分页查询产品列表
     let productList = await ProductModel.find(obj)
+      .sort(sortType)
       .skip((page - 1) * size || 0)
       .limit(size || 20);
     let total = await ProductModel.find(obj).count();
@@ -39,7 +53,30 @@ const queryProductList = async (ctx) => {
     });
   }
 };
-
+// 查询所有列表
+const queryAllProductList = async (ctx) => {
+  const { page, size } = ctx.request.body;
+  try {
+    // 分页查询产品列表
+    let productList = await ProductModel.find({ page, size })
+      .sort({ sale: 1 })
+      .skip((page - 1) * size || 0)
+      .limit(size || 20);
+    let total = await ProductModel.find({ page, size }).count();
+    return (ctx.body = {
+      state: 0,
+      msg: "查询成功",
+      total,
+      data: productList,
+    });
+  } catch (e) {
+    console.log(e);
+    return (ctx.body = {
+      state: -1,
+      msg: "服务器错误，请稍后再试~",
+    });
+  }
+};
 // 新增产品
 const addProduct = async (ctx) => {
   const { pin, title, desc, category, c_item, tags, price, price_off, unit, images, inventory } = ctx.request.body;
@@ -175,6 +212,7 @@ const likeSearchProduct = async (ctx) => {
 
 module.exports = {
   queryProductList,
+  queryAllProductList,
   addProduct,
   editProduct,
   queryProductInfo,

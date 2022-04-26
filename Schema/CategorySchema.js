@@ -12,6 +12,11 @@ const CategorySchema = new Schema(
       type: Array,
       required: false,
     },
+    // 类目图片
+    avatar: {
+      type: String,
+      required: true,
+    }
   },
   {
     versionKey: false,

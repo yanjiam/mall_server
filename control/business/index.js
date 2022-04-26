@@ -37,7 +37,7 @@ const login = async (ctx) => {
         msg: "密码错误",
       });
     }
-    console.log(`${user.b_name}登录成功`);
+    console.log(`${user.bname}登录成功`);
     writeCookie(ctx, pin, passwd);
     return (ctx.body = {
       state: 0,
@@ -48,13 +48,13 @@ const login = async (ctx) => {
 };
 
 const register = async (ctx) => {
-  const { b_name, pin, passwd } = ctx.request.body;
+  const { bname, pin, passwd } = ctx.request.body;
   let user = await BusinessModel.findOne({ pin });
   let createDate = new Date();
   if (!user) {
     // 如果用户名还没被使用
     try {
-      let u = new BusinessModel({ b_name, passwd, pin, createDate });
+      let u = new BusinessModel({ bname, passwd, pin, createDate });
       await u.save();
       return (ctx.body = {
         state: 0,
@@ -113,21 +113,21 @@ const changePwd = async (ctx) => {
 };
 
 const addUser = async (ctx) => {
-  const { b_name, password, pin, power } = ctx.request.body;
+  const { bname, password, pin, power } = ctx.request.body;
   let user = await BusinessModel.findOne({ pin });
   if (!user) {
     // 如果用户名还没被使用
     try {
       let createDate = new Date();
       let u = new BusinessModel({
-        b_name,
+        bname,
         passwd: password,
         pin,
         power,
         createDate,
       });
       await u.save();
-      // writeCookie(ctx, b_name, passwd)
+      // writeCookie(ctx, bname, passwd)
       return (ctx.body = {
         state: 0,
         msg: "注册成功",
@@ -148,14 +148,14 @@ const addUser = async (ctx) => {
 };
 
 const selectUser = async (ctx) => {
-  const { _id, b_name, power, page, size } = ctx.request.body;
+  const { _id, bname, power, page, size } = ctx.request.body;
   try {
     let searchParams = {};
     if (_id) {
       searchParams._id = _id;
     }
-    if (b_name) {
-      searchParams.b_name = b_name;
+    if (bname) {
+      searchParams.bname = bname;
     }
     if (power) {
       searchParams.power = power;
@@ -202,10 +202,10 @@ const queryInfo = async (ctx) => {
 }
 
 const changeInfo = async (ctx) => {
-  const { _id, b_name, passwd, avatar, pin, power } = ctx.request.body;
+  const { _id, bname, passwd, avatar, pin, power } = ctx.request.body;
   try {
     let res = await BusinessModel.findByIdAndUpdate(_id, {
-      b_name,
+      bname,
       passwd,
       avatar,
       pin,

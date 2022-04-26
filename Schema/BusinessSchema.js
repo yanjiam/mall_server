@@ -3,7 +3,7 @@ const { Schema } = require("./config");
 const BusinessSchema = new Schema(
   {
     // 商家名称
-    b_name: {
+    bname: {
       type: String,
       required: true,
     },

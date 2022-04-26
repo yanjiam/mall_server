@@ -12,6 +12,8 @@ const categoryPost = require("../control/category/index");
 
 // 查询产品列表接口
 r.post("/products/all", productPost.queryProductList);
+// 查询所有产品列表接口
+r.post("/products/allList", productPost.queryAllProductList);
 // 添加商品
 r.post("/products/add", productPost.addProduct);
 // 编辑产品
@@ -98,16 +100,19 @@ r.post("/shopCart/delete", shopCartPost.deleteCart);
  */
 
 // 查询类目列表接口
-r.post("/category/all", categoryPost.queryCategoryList);
+r.post("/category/list", categoryPost.queryCategoryList);
+
+// 查询所有类目接口
+r.post("/category/all", categoryPost.queryAllCategory);
 
 // 添加类目
 r.post("/category/add", categoryPost.addCategroy);
 
 // 编辑类目
-r.post("/category/edit", categoryPost.queryCategoryInfo);
+r.post("/category/edit", categoryPost.editCategory);
 
 // 查询类目详细
-r.post("/category/queryInfo", categoryPost.editCategory);
+r.post("/category/queryInfo", categoryPost.queryCategoryInfo);
 
 // 删除类目
 r.post("/category/delete", categoryPost.deleteCategory);

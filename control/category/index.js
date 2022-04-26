@@ -8,7 +8,6 @@ const queryCategoryList = async (ctx) => {
     let categoryList = await CategoryModel.find()
       .skip((page - 1) * size || 0)
       .limit(size || 10);
-    console.log("---------------------- ", categoryList);
     let total = await CategoryModel.find().count();
     return (ctx.body = {
       state: 0,
@@ -24,14 +23,35 @@ const queryCategoryList = async (ctx) => {
     });
   }
 };
+const queryAllCategory = async (ctx) => {
+  try {
+    // 分页查询类目列表
+    let categoryList = await CategoryModel.find()
+    let total = categoryList.length;
+    return (ctx.body = {
+      state: 0,
+      msg: "查询成功",
+      total,
+      data: categoryList,
+    });
+  } catch (e) {
+    console.log(e);
+    return (ctx.body = {
+      state: -1,
+      msg: "服务器错误，请稍后再试~",
+    });
+  }
+};
+
 
 // 新增类目
 const addCategroy = async (ctx) => {
-  const { name, c_items } = ctx.request.body;
+  const { name, c_items, avatar } = ctx.request.body;
   try {
     let u = new CategoryModel({
       name,
       c_items,
+      avatar,
     });
     await u.save();
     return (
@@ -51,11 +71,12 @@ const addCategroy = async (ctx) => {
 
 // 编辑类目
 const editCategory = async (ctx) => {
-  const { _id, name, c_items } = ctx.request.body;
+  const { _id, name, c_items, avatar } = ctx.request.body;
   try {
     let res = await CategoryModel.findByIdAndUpdate(_id, {
       name,
       c_items,
+      avatar,
     });
     if (res) {
       return (
@@ -117,6 +138,7 @@ const deleteCategory = async (ctx) => {
 
 module.exports = {
   queryCategoryList,
+  queryAllCategory,
   addCategroy,
   queryCategoryInfo,
   editCategory,

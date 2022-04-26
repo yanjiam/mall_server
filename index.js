@@ -7,7 +7,7 @@ const koaStatic = require("koa-static");
 const koaBody = require("koa-body");
 const router = require("./routes/router");
 
-app.keys = ["bug-serve"];
+app.keys = ["mall-serve"];
 const CONFIG = {
   key: "SID",
   maxAge: 36e5,
@@ -20,7 +20,7 @@ const CONFIG = {
 //临时处理一下跨域
 app.use(async (ctx, next) => {
   // Access-Control-Allow-Origin设置为*时cookie不会出现在http的请求头里
-  ctx.set("Access-Control-Allow-Origin", "http://localhost:8080");
+  ctx.set("Access-Control-Allow-Origin", "*");
   ctx.set(
     "Access-Control-Allow-Headers",
     "Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild"

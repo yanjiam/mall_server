@@ -23,6 +23,7 @@ const writeCookie = (ctx, name, pass) => {
 const login = async (ctx) => {
   const { pin, passwd } = ctx.request.body;
   let user = await UserModel.findOne({ pin });
+  console.log(user);
   if (!user) {
     // 如果用户名还没被使用
     // 重定向到聊天页面
@@ -64,13 +65,13 @@ const loginout = async (ctx) => {
 };
 
 const register = async (ctx) => {
-  const { username, pin, passwd } = ctx.request.body;
+  const { username, pin, passwd, avatar } = ctx.request.body;
   let user = await UserModel.findOne({ pin });
   let createDate = new Date();
   if (!user) {
     // 如果用户名还没被使用
     try {
-      let u = new UserModel({ username, passwd, pin, createDate });
+      let u = new UserModel({ username, passwd, pin, avatar, createDate });
       await u.save();
       return (ctx.body = {
         state: 0,
@@ -223,8 +224,10 @@ const changeInfo = async (ctx) => {
       power,
     });
     if (res) {
+      let info = await UserModel.findOne({pin});
       return (ctx.body = {
         state: 0,
+        data: info,
         msg: "更新成功",
       });
     } else {

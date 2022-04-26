@@ -17,9 +17,9 @@ const mkdirs = (dirname, callback) => {
 const uploadUrl = "http://localhost:9527/avatar";
 
 const upload = (ctx) => {
-  const file = ctx.request.files.file;
+  const file = ctx.request.file;
   // 读取文件流
-  const fileReader = fs.createReadStream(file?.path);
+  const fileReader = fs.createReadStream(file.path);
   let filePath = path.join(__dirname, "../../public/avatar/");
   // 组装成绝对路径
   const fileResource = filePath + `/${file.name}`;

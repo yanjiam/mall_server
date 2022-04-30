@@ -188,18 +188,18 @@ const deleteProduct = async (ctx) => {
 // 联想查询
 const likeSearchProduct = async (ctx) => {
   const { searchWord } = ctx.request.body;
-  if (searchWord) {
-    obj.title = { $regex: new RegExp(searchWord, "i") };
-  }
   try {
     // 分页查询产品列表
     let productList = await ProductModel.find({ title: { $regex: new RegExp(searchWord, "i") } })
       .limit(5);
+    let likeList = [];
+    productList.forEach(item => {
+      likeList.push(item.title);
+    });
     return (ctx.body = {
       state: 0,
       msg: "查询成功",
-      total,
-      data: productList,
+      data: likeList,
     });
   } catch (e) {
     console.log(e);

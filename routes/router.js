@@ -15,6 +15,8 @@ const echartsPost = require("../control/echarts/index");
 r.post("/products/all", productPost.queryProductList);
 // 查询所有产品列表接口
 r.post("/products/allList", productPost.queryAllProductList);
+// 联想查询接口
+r.post("/products/like", productPost.likeSearchProduct);
 // 添加商品
 r.post("/products/add", productPost.addProduct);
 // 编辑产品

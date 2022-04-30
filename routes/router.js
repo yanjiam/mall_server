@@ -1,10 +1,11 @@
 const r = require("koa-router")();
-const upload = require("../control/upload/index");
 const userPost = require("../control/user/index");
 const productPost = require("../control/product/index");
 const businessPost = require("../control/business/index");
 const shopCartPost = require("../control/shopCart/index");
 const categoryPost = require("../control/category/index");
+const orderPost = require("../control/order/index");
+const echartsPost = require("../control/echarts/index");
 
 /**
  * 商品
@@ -117,7 +118,29 @@ r.post("/category/queryInfo", categoryPost.queryCategoryInfo);
 // 删除类目
 r.post("/category/delete", categoryPost.deleteCategory);
 
-// 上传图片接口
-r.post("/upload/images", upload.upload);
+/**
+ * 订单
+ */
+
+// B端查询订单
+r.post("/order/Blist", orderPost.queryBOrderList);
+
+// C端查询订单
+r.post("/order/Clist", orderPost.queryCOrderList);
+
+// 新建订单
+r.post("/order/add", orderPost.addOrder);
+
+// 修改订单状态
+r.post("/order/change", orderPost.changeStatus);
+
+// 删除订单
+r.post("/order/delete", orderPost.deleteOrder);
+
+/**
+ * echarts
+ */
+// 热销前十数据
+r.post("/echart/hotSale", echartsPost.queryEchartsData);
 
 module.exports = r;

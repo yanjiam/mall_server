@@ -10,7 +10,7 @@ const ProductSchema = new Schema(
     // 商品描述
     desc: {
       type: String,
-      required: true,
+      required: false,
     },
     // 商品类目
     category: {
@@ -20,7 +20,7 @@ const ProductSchema = new Schema(
     // 商品子类目
     c_item: {
       type: String,
-      required: false,
+      required: true,
     },
     // 商品标签
     tags: {
